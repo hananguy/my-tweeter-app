@@ -1,0 +1,37 @@
+.inputWrapper {
+  position: relative;
+  display: flex;
+  height: 150px;
+  width:100%;
+  border:2px solid white;
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+
+.inputWrapper textarea {
+  flex: 1;
+  padding-right: 60px;
+}
+
+.inputWrapper button {
+  position: absolute;
+  background-color: rgb(93, 167, 190);
+  width:65px;
+  height:30px;
+  border-radius: 5px;
+  right: 5px;
+  bottom: 10px;
+}
+
+.Error
+{
+  background-color: lightcoral;
+  position: absolute;
+  border-radius: 5px;
+  left: 5px;
+  bottom:10px;
+}
+.hide
+{
+  display:none
+}

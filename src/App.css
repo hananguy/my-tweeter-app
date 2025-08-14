@@ -1,0 +1,9 @@
+.TweetsContainer
+{
+    display:flex;
+    width:50%;
+    margin:auto;
+    flex-direction: column;
+    align-items: center;
+    /* justify-content: center; */
+}
