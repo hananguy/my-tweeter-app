@@ -22,7 +22,7 @@ export function AddTweet(){
             return;
         dispatch({ type: "ADD", data: {userName: "Guy", text, time: new Date().toLocaleString()}})
         setText("")
-        console.log(text.length)
+        console.log(JSON.parse(localStorage.getItem("tweets:v1")))
     }
 
 

@@ -1,12 +1,22 @@
-import { createContext, useContext, useReducer } from "react";
+import { createContext, useContext, useReducer, useEffect } from "react";
 
 const TweetsContext = createContext(null);
 const TweetsDispatchContext = createContext(null);
+const STORAGE_KEY = "tweets:v1";
+
 
 
 export function TweetsProvider({children}){
 
-    const [tweets, dispatchTweets] = useReducer(tweetsReducer, [])
+    const [tweets, dispatchTweets] = useReducer(tweetsReducer, [], initFromStorage)
+
+    useEffect(() => {
+        try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(tweets));
+        } catch {
+        // storage full/blocked — ignore gracefully
+        }
+    }, [tweets]);
 
     return(
         <TweetsContext value={tweets}>
@@ -17,6 +27,11 @@ export function TweetsProvider({children}){
     )
 }
 
+
+function initFromStorage() {
+  const stored = localStorage.getItem(STORAGE_KEY);
+  return stored ? JSON.parse(stored) : []; 
+}
 
 export function useTweetsContext(){
     return useContext(TweetsContext);
