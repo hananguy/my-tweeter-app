@@ -1,6 +1,6 @@
 
 import './TweetItem.css'
-export const TweetItem = ({userName, text, time}) =>{
+export const TweetItem = ({userName, content, date}) =>{
 
 
     return(
@@ -8,10 +8,10 @@ export const TweetItem = ({userName, text, time}) =>{
 
                 <div className="tweet-titles">
                     <span>{userName}</span>
-                    <span>{time}</span>
+                    <span>{date}</span>
                 </div>
                 
-                <p>{text}</p>
+                <p>{content}</p>
         </li>
     )
 

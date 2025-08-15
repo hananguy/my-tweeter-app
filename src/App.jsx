@@ -1,10 +1,8 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
 import { TweetsProvider } from '../context/TweeterContext'
 import { AddTweet } from '../components/AddTweet'
 import { ListTweet } from '../components/ListTweet'
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 function App() {
 

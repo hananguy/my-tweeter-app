@@ -1,5 +1,5 @@
 import {useState} from "react"
-import {useTweeterDispatchContext} from '../context/TweeterContext'
+import {postTweet} from '../context/TweeterContext'
 import './AddTweet.css'
 
 
@@ -8,7 +8,6 @@ export function AddTweet(){
 
     const [text, setText] = useState('')
     const [showError, setShowError] = useState(false);
-    const dispatch = useTweeterDispatchContext();
 
     const handleTextChange = (e) =>
     {
@@ -20,9 +19,9 @@ export function AddTweet(){
     {
         if(showError === true)
             return;
-        dispatch({ type: "ADD", data: {userName: "Guy", text, time: new Date().toLocaleString()}})
+        const newTweet = {content: text, userName: "Guy", date: new Date().toISOString()}
+        postTweet(newTweet);
         setText("")
-        console.log(JSON.parse(localStorage.getItem("tweets:v1")))
     }
 
 

@@ -1,22 +1,13 @@
 import { createContext, useContext, useReducer, useEffect } from "react";
-
+import axios from 'axios';
 const TweetsContext = createContext(null);
 const TweetsDispatchContext = createContext(null);
-const STORAGE_KEY = "tweets:v1";
-
 
 
 export function TweetsProvider({children}){
 
-    const [tweets, dispatchTweets] = useReducer(tweetsReducer, [], initFromStorage)
+    const [tweets, dispatchTweets] = useReducer(tweetsReducer, [])
 
-    useEffect(() => {
-        try {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(tweets));
-        } catch {
-        // storage full/blocked — ignore gracefully
-        }
-    }, [tweets]);
 
     return(
         <TweetsContext value={tweets}>
@@ -28,14 +19,6 @@ export function TweetsProvider({children}){
 }
 
 
-function initFromStorage() {
-  const stored = localStorage.getItem(STORAGE_KEY);
-  return stored ? JSON.parse(stored) : []; 
-}
-
-export function useTweetsContext(){
-    return useContext(TweetsContext);
-}
 
 export function useTweeterDispatchContext(){
     return useContext(TweetsDispatchContext)
@@ -48,9 +31,9 @@ const tweetsReducer  = (tweets, action) =>
     case "ADD":
       return tweets.concat({
         id: Date.now(),
-        data: {userName: action.data.userName,
-                text: action.data.text,
-                time: action.data.time
+        data: {content: action.data.text, 
+               userName: action.data.userName,
+                date: action.data.time
         }
       });
     case "DELETE":
@@ -62,4 +45,23 @@ const tweetsReducer  = (tweets, action) =>
     default:
       return tweets;
   } 
+}
+
+export async function postTweet(newTweet) {
+  try {
+    const res = await axios.post(
+      "https://uckmgdznnsnusvmyfvsb.supabase.co/rest/v1/Tweets?apikey=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVja21nZHpubnNudXN2bXlmdnNiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTQ0ODU5NjAsImV4cCI6MjA3MDA2MTk2MH0.D82S0DBivlsXCCAdpTRB3YqLqTOIP7MUj-p1R8Lj9Jo",
+      newTweet,
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Prefer: "return=representation"
+        }
+      }
+    );
+    return res.data;
+  } catch (err) {
+    console.error("Error posting tweet:", err);
+    throw err;
+  }
 }
