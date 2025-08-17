@@ -1,5 +1,5 @@
-import AddTweet from "../components/AddTweet";
-import ListTweet from "../components/ListTweet";
+import {AddTweet} from "../components/AddTweet";
+import {ListTweet} from "../components/ListTweet";
 
 
 

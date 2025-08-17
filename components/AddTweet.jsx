@@ -1,13 +1,14 @@
 import {useState} from "react"
 import {postTweet} from '../context/TweeterContext'
 import './AddTweet.css'
-
+import { useUserName } from '../context/TweeterContext'
 
 
 export function AddTweet(){
 
     const [text, setText] = useState('')
     const [showError, setShowError] = useState(false);
+    const {userName, setUserName} = useUserName();
 
     const handleTextChange = (e) =>
     {
@@ -19,7 +20,7 @@ export function AddTweet(){
     {
         if(showError === true)
             return;
-        const newTweet = {content: text, userName: "Guy", date: new Date().toISOString()}
+        const newTweet = {content: text, userName: userName, date: new Date().toISOString()}
         postTweet(newTweet);
         setText("")
     }

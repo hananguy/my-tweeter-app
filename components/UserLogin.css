@@ -1,0 +1,48 @@
+.userLogin-container {
+  max-width: 600px;
+  margin: 50px auto;
+  margin-top: 0px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  color: #fff;
+  font-family: Arial, sans-serif;
+}
+
+.userLogin-container h1 {
+}
+
+.userLogin-container span {
+  font-weight: bold;
+  margin-bottom: 5px;
+  display: inline-block;
+}
+
+.userLogin-container input[type="text"] {
+  width: 89%;
+  border-radius: 6px;
+  padding:12px;
+  border: 1px solid #555;
+  background-color: #111827; /* dark navy background */
+  color: #fff;
+  font-size: 16px;
+}
+
+.userLogin-container input[type="text"]::placeholder {
+  color: #888;
+}
+
+
+.userLogin-container button {
+  align-self: flex-end;
+  padding: 8px 16px;
+  background-color: #1d4ed8; /* blue button */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.userLogin-container button:hover {
+  background-color: #2563eb;
+}

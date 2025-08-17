@@ -33,7 +33,7 @@ export function ListTweet() {
 
         const interval = setInterval(() => {
             GetData();
-            }, 5000)
+            }, 10)
             
         return () => clearInterval(interval)
     }, [])

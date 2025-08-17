@@ -1,25 +1,30 @@
-import { createContext, useContext, useReducer, useEffect } from "react";
+import { createContext, useContext, useReducer, useEffect, useState } from "react";
 import axios from 'axios';
 const TweetsContext = createContext(null);
 const TweetsDispatchContext = createContext(null);
-
+const UserNameProvider = createContext("");
 
 export function TweetsProvider({children}){
-
-    const [tweets, dispatchTweets] = useReducer(tweetsReducer, [])
+    const [userName, setUserName] = useState("");
+    const [tweets, dispatchTweets] = useReducer(tweetsReducer, []);
 
 
     return(
         <TweetsContext value={tweets}>
             <TweetsDispatchContext value={dispatchTweets}>
+              <UserNameProvider value={{userName, setUserName}}>
                 {children}
+              </UserNameProvider>
             </TweetsDispatchContext>
         </TweetsContext>
     )
 }
 
 
-
+export function useUserName()
+{
+  return useContext(UserNameProvider);
+}
 export function useTweeterDispatchContext(){
     return useContext(TweetsDispatchContext)
 }
