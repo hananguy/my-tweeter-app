@@ -20,7 +20,7 @@ function App() {
     //   </TweetsProvider>
     // </>
    <TweetsProvider>
-      <BrowserRouter>
+      <BrowserRouter basename="/my-tweeter-app">
         <Routes>
           <Route element={<AppLayout />}>
             <Route index element={<Home />} />
