@@ -1,22 +1,15 @@
 import { createContext, useContext, useReducer, useEffect, useState } from "react";
 import axios from 'axios';
-const TweetsContext = createContext(null);
-const TweetsDispatchContext = createContext(null);
 const UserNameProvider = createContext("");
 
 export function TweetsProvider({children}){
     const [userName, setUserName] = useState("");
-    const [tweets, dispatchTweets] = useReducer(tweetsReducer, []);
 
 
     return(
-        <TweetsContext value={tweets}>
-            <TweetsDispatchContext value={dispatchTweets}>
-              <UserNameProvider value={{userName, setUserName}}>
-                {children}
-              </UserNameProvider>
-            </TweetsDispatchContext>
-        </TweetsContext>
+    <UserNameProvider value={{userName, setUserName}}>
+      {children}
+    </UserNameProvider>
     )
 }
 
@@ -24,32 +17,6 @@ export function TweetsProvider({children}){
 export function useUserName()
 {
   return useContext(UserNameProvider);
-}
-export function useTweeterDispatchContext(){
-    return useContext(TweetsDispatchContext)
-}
-
-
-const tweetsReducer  = (tweets, action) =>
-{
-  switch (action.type) {
-    case "ADD":
-      return tweets.concat({
-        id: Date.now(),
-        data: {content: action.data.text, 
-               userName: action.data.userName,
-                date: action.data.time
-        }
-      });
-    case "DELETE":
-      return tweets.filter((tweet) => tweet.id !== action.data);
-    case "TOGGLE":
-      return tweets.map((tweet) =>
-        tweet.id === action.data ? { ...tweet, completed: !tweet.completed } : tweet
-      );
-    default:
-      return tweets;
-  } 
 }
 
 export async function postTweet(newTweet) {
