@@ -1,7 +1,7 @@
 import { createContext, useContext, useReducer, useEffect, useState } from "react";
 import axios from 'axios';
 const UserNameProvider = createContext("");
-
+import { supabase } from '../data/supabase'
 export function TweetsProvider({children}){
     const [userName, setUserName] = useState("");
 
@@ -20,20 +20,7 @@ export function useUserName()
 }
 
 export async function postTweet(newTweet) {
-  try {
-    const res = await axios.post(
-      "https://uckmgdznnsnusvmyfvsb.supabase.co/rest/v1/Tweets?apikey=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVja21nZHpubnNudXN2bXlmdnNiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTQ0ODU5NjAsImV4cCI6MjA3MDA2MTk2MH0.D82S0DBivlsXCCAdpTRB3YqLqTOIP7MUj-p1R8Lj9Jo",
-      newTweet,
-      {
-        headers: {
-          "Content-Type": "application/json",
-          Prefer: "return=representation"
-        }
-      }
-    );
-    return res.data;
-  } catch (err) {
-    console.error("Error posting tweet:", err);
-    throw err;
-  }
+  const { data, error } = await supabase.from('Tweets').insert([{ content: newTweet.content, userName: newTweet.userName, date: newTweet.date }])
+
+  if (error) console.error(error)
 }

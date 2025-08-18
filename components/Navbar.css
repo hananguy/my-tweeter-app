@@ -31,8 +31,15 @@
   background-color: #3f4652;
   color: white;
 }
+.aLink:hover{
+  cursor: pointer;
+}
 
 .nav-link.active {
   font-weight: 500;
   color: white;
+}
+#logout
+{
+  justify-content: end;
 }

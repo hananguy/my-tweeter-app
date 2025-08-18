@@ -1,34 +1,32 @@
 import './App.css'
+import {useState, use} from 'react'
 import { TweetsProvider } from '../context/TweeterContext'
 import { AddTweet } from '../components/AddTweet'
 import { ListTweet } from '../components/ListTweet'
-import { BrowserRouter, Routes, Route } from "react-router";
+import { BrowserRouter, Routes, Route, useNavigate } from "react-router";
 import  Home from '../pages/Home'
 import Profile from '../pages/Profile'
-// import Navbar from '../components/Navbar'
 import {AppLayout} from './layouts/AppLayout';
+import {LoginPage} from '../pages/LoginPage'
+import { ProtectedRoute } from '../auth/ProtectedRoute';
+import {AuthProvider} from '../auth/AuthProvider'
+
 function App() {
 
 
+  
   return (
-    // <>
-    //   <TweetsProvider>
-    //     <div className="TweetsContainer">
-    //       <AddTweet/>
-    //       <ListTweet/>
-    //     </div>
-    //   </TweetsProvider>
-    // </>
-   <TweetsProvider>
-      <BrowserRouter basename="/my-tweeter-app">
+  <AuthProvider>
+   <TweetsProvider> 
         <Routes>
           <Route element={<AppLayout />}>
-            <Route index element={<Home />} />
+            <Route index element={<LoginPage/>} />
             <Route path="profile" element={<Profile />} />
+            <Route path="home" element={<Home/>} />
           </Route>
         </Routes>
-      </BrowserRouter>
     </TweetsProvider>
+  </AuthProvider>
   )
 }
 

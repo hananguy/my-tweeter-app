@@ -2,14 +2,14 @@ import {useState} from "react"
 import {postTweet} from '../context/TweeterContext'
 import './AddTweet.css'
 import { useUserName } from '../context/TweeterContext'
-
+import { useAuthContext } from "../auth/AuthProvider"
 
 export function AddTweet(){
 
     const [text, setText] = useState('')
     const [showError, setShowError] = useState(false);
-    const {userName, setUserName} = useUserName();
 
+    const {activeUser} = useAuthContext();
     const handleTextChange = (e) =>
     {
         setText(e.target.value);
@@ -20,8 +20,9 @@ export function AddTweet(){
     {
         if(showError === true)
             return;
-        const newTweet = {content: text, userName: userName, date: new Date().toISOString()}
+        const newTweet = {content: text, userName: activeUser, date: new Date().toISOString()}
         postTweet(newTweet);
+        console.log(newTweet)
         setText("")
     }
 

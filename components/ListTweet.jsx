@@ -10,27 +10,6 @@ export function ListTweet() {
     const [loading, setLoading] = useState(true);
     const firstLoad = useRef(true);
 
-    // useEffect(() =>{
-    //     const GetData = async function()
-    //     {
-    //         try
-    //         {
-    //             if (firstLoad.current) setLoading(true);
-    //             const { data } = await axios.get("https://uckmgdznnsnusvmyfvsb.supabase.co/rest/v1/Tweets?apikey=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVja21nZHpubnNudXN2bXlmdnNiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTQ0ODU5NjAsImV4cCI6MjA3MDA2MTk2MH0.D82S0DBivlsXCCAdpTRB3YqLqTOIP7MUj-p1R8Lj9Jo")
-    //             setTweets(prevState => isEqual(prevState, data) ? prevState : data);
-    //              if (firstLoad.current) {
-    //                setLoading(false);
-    //                firstLoad.current = false;
-    //                 }
-    //         }
-    //         catch{
-    //             return new Error("Failed fetching tweets from server")
-    //         }
-    //         finally{
-    //             setLoading(false)
-    //         }
-            
-    //     }
       useEffect(() =>{
         const GetData = async function()
         {
@@ -38,7 +17,10 @@ export function ListTweet() {
             {
                 if (firstLoad.current) setLoading(true);
                 const { data, error } = await supabase.from('Tweets').select('*');
-                if(error) console.log(error);
+                if(error) 
+                {
+                  
+                }
                 else{
                       setTweets(prevState => isEqual(prevState, data) ? prevState : data);
                  if (firstLoad.current) {
@@ -49,7 +31,6 @@ export function ListTweet() {
                 
             }
             catch{
-                return new Error("Failed fetching tweets from server")
             }
             finally{
                 setLoading(false)
