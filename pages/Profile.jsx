@@ -10,7 +10,8 @@ export default function Profile()
 
 
     return(
-    <ProtectedRoute>
+    // <ProtectedRoute>
         <UserLogin/>
-    </ProtectedRoute>)
+    // </ProtectedRoute>
+    )
 }

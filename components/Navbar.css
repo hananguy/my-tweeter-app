@@ -33,13 +33,21 @@
 }
 .aLink:hover{
   cursor: pointer;
+  background-color: #3f4652;
+  color: white;
+  
+}
+.aLink
+{
+  text-decoration: none;
+  color: #cfd3d8; /* light gray text */
+  font-size: 0.95rem;
+  padding: 0.3rem 0.6rem;
+  border-radius: 4px;
+  transition: background-color 0.2s ease, color 0.2s ease;
 }
 
 .nav-link.active {
   font-weight: 500;
   color: white;
-}
-#logout
-{
-  justify-content: end;
 }

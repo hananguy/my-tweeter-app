@@ -33,7 +33,7 @@ export default function Navbar() {
           </NavLink>
         </li>
         <li>
-        <a onClick={onLogout}>
+        <a onClick={onLogout} className="aLink">
             Logout
           </a>
         </li>

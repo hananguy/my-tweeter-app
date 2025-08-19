@@ -1,20 +1,21 @@
 import './UserLogin.css'
 import { useUserName } from '../context/TweeterContext'
 import {useState} from "react";
-
+import { useAuthContext } from '../auth/AuthProvider';
 
 
 export default function UserLogin()
 {   
     const [text, setText] = useState("")
+    const {setActiveUser} = useAuthContext();
 
-    const {userName, setUserName} = useUserName();
+    // const {userName, setUserName} = useUserName();
 
     const updateText = (event) =>{
         setText(event.target.value)
     }
     const updateUserName = () =>{
-        setUserName(text)
+        setActiveUser(text)
         setText("")
     }
 

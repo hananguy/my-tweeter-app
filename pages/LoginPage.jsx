@@ -15,11 +15,9 @@ import classes from './LoginPage.module.css';
 import {useState} from 'react'
 import { useAuthContext } from '../auth/AuthProvider';
 export function LoginPage() {
-    // const [email, setEmail] = useState("")
-    // const [pwd, setPwd] = useState("")
     const [loading, setLoading] = useState(false)
-    const {onLogin} = useAuthContext();
-
+    const [userNotFound, setUserNotFound] = useState(false)
+    const {onLogin, activeUser} = useAuthContext();
       const form = useForm({
     initialValues: {
       email: "",
@@ -27,6 +25,7 @@ export function LoginPage() {
     },
 
     validate: {
+    
       email: (val) => (/^\S+@\S+$/.test(val) ? null : "Invalid email"),
       password: (val) =>
         val.length < 6 ? "Password should include at least 6 characters" : null,
@@ -35,8 +34,24 @@ export function LoginPage() {
 
     const handleClick = () =>
     {
-        setLoading(true)
-        onLogin(form.values.email, form.values.password);
+        setUserNotFound(false);
+        const validation = form.validate();
+        if(validation.hasErrors)
+        {
+            console.log(validation)
+        }
+        else
+        {
+            setLoading(true);
+            onLogin(form.values.email, form.values.password).then(() => {
+                if(activeUser !== null)
+                {
+                    setUserNotFound(true);
+                }
+                setLoading(false)});
+
+        }
+        
     }
 
   return (
@@ -50,8 +65,8 @@ export function LoginPage() {
       </Text>
 
       <Paper withBorder shadow="sm" p={22} mt={30} radius="md">
-        <TextInput label="Email" placeholder="you@mantine.dev" required radius="md" value={form.values.email} onChange={(e) => form.setFieldValue("email", e.currentTarget.value)}/>
-        <PasswordInput label="Password" placeholder="Your password" required mt="md" radius="md" value={form.values.password} onChange={(e) => form.setFieldValue("password", e.currentTarget.value)}/>
+        <TextInput label="Email" placeholder="you@mantine.dev" required radius="md" value={form.values.email} onChange={(e) => form.setFieldValue("email", e.currentTarget.value)} error={form.errors.email}/>
+        <PasswordInput label="Password" placeholder="Your password" required mt="md" radius="md" value={form.values.password} onChange={(e) => form.setFieldValue("password", e.currentTarget.value)} error={form.errors.password}/>
         <Group justify="space-between" mt="lg">
           <Checkbox label="Remember me" />
           <Anchor component="button" size="sm">
@@ -62,6 +77,8 @@ export function LoginPage() {
           Sign in
         </Button>
       </Paper>
+      {userNotFound && <div>User not found!</div>}
     </Container>
+
   );
 }
